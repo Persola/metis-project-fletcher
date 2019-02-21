@@ -1,0 +1,20 @@
+sudo apt update
+sudo apt install -y python3-pip
+python3 -m pip install jupyter msgpack tqdm matplotlib pandas pymongo
+
+# mongo set up
+sudo mkdir -p /data/db
+sudo chown -R `id -un` /data/db
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+sudo apt-get update
+# fix: https://askubuntu.com/questions/842592/apt-get-fails-on-16-04-or-18-04-installing-mongodb
+sudo apt-get install -y mongodb-org
+
+# host: jupyter notebook --no-browser --port=8889
+# local: ssh -L localhost:8889:localhost:8889 -i ~/.ssh/metis_projects.pem ubuntu@3.84.119.192
+
+wget http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Books_5.json.gz
+gunzip reviews_Books_5.json.gz
+mkdir data
+mv reviews_Books_5.json data/amazon_book_reviews.json
